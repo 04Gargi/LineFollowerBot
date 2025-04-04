@@ -26,18 +26,20 @@ bool juncn = true;
 bool light = true;
 bool a = false;
 
-float kp = 0.873, ki = 0, kd = 0;
+float kp = 0.7, ki = 0, kd = 0.7;
+float alpha = 0.7;
 int err = 0, err2 = 0;
 int differr = 0;
 int preverr = 0;
 int preverr2 = 0;
 int sumerr = 0;
 int sumerr2 = 0;
-int base = 70;
-int base2 = 70;
+int base = 120;
+int base2 = 132.5;
 int setp = 35;
 int pwm2 = 0;
-float change = 0;
+int pwm1 = 0;
+float hgj = 0, ffg = 0;
 
 #define ns 3  // no.of sensor
 #define p1 1
