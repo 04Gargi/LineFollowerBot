@@ -17,6 +17,7 @@ void moveForward() {
 
 #ifdef pri
   Serial.print("Forward");
+  Serial.print("\t");
 #endif
 }
 void stop() {

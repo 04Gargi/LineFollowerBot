@@ -11,6 +11,7 @@ int in2 = 7;
 int enB = 6;
 int in3 = 5;
 int in4 = 4;
+int junctionPulse = 3; 
 
 int lsa_v = 0;  // stores value of lsa
 
@@ -25,13 +26,16 @@ int pwm1 = 0;
 */
 float err = 0, preverr = 0, differr = 0;
 float arr[2][4] = {
-  { 69, 0.5, 0, 0 },
-  { 79, 0.5, 0, 0.4 }
+  { 75, 1.1, 0, 0.3},
+  { 120, 1.3, 0, 0.4 }
 };
 float pid1 = 0, pid2 = 0;
 
 LSA08 L;  //LSA object
 
 int setp = 40;
+
+int cnt = 0;
+
 
 #endif
