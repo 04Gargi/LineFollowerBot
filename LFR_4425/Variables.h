@@ -1,6 +1,5 @@
 #ifndef Variables_h
 #define Variables_h
-//confirmm kdd
 
 /*
 *The given pins are for L298N motor driver.
@@ -11,7 +10,7 @@ int in2 = 7;
 int enB = 6;
 int in3 = 5;
 int in4 = 4;
-int junctionPulse = 3; 
+int junctionPulse = 3;
 
 int lsa_v = 0;  // stores value of lsa
 
@@ -25,9 +24,17 @@ int pwm1 = 0;
 *The given variables are for pid.
 */
 float err = 0, preverr = 0, differr = 0;
+// float arr[2][4] = {
+//   { 105, 1.2, 0, 0.6 },
+//   { 120, 1.2, 0, 0.8}
+// };
+// float arr[2][4] = {
+//   { 78, 1.3, 0, 0.3},
+//   { 128, 1.5, 0, 0.2}
+// };
 float arr[2][4] = {
-  { 75, 1.1, 0, 0.3},
-  { 120, 1.3, 0, 0.4 }
+  { 90, 0, 0,0  },
+  { 108,0 , 0, 0}
 };
 float pid1 = 0, pid2 = 0;
 
@@ -35,7 +42,8 @@ LSA08 L;  //LSA object
 
 int setp = 40;
 
-int cnt = 0;
+int cnt = 0;  // count of junctions
 
+bool st = false;  // flag for movement
 
 #endif

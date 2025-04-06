@@ -1,7 +1,9 @@
 #ifndef sl_h
 #define sl_h
+
 void stop();
 void moveForward();
+
 void s_req() {
   L.AttachAnalogPin(A1);
   // L.debugger.Initialize("LSA", &Serial);
@@ -21,23 +23,24 @@ void s_req() {
 
   pinMode(junctionPulse, INPUT);
 
-  delay(3000);
+  delay(2000);
 }
 
 void l_req() {
   lsa_v = L.ReadLSA();
-  if (lsa_v == 255) stop();
-  else moveForward();
-
-  if (digitalRead(junctionPulse)) {
-    if (cnt > 2) {
-      stop();
-
+  if (lsa_v == 255) {
+    stop();
+  } else {
+    if (digitalRead(junctionPulse)) {
+      if (++cnt > 4) {
+        stop();
+      }
+      else moveForward();
     } else {
       moveForward();
-      cnt++;
     }
   }
+
 
 #ifdef pri
   Serial.print("lsa: ");
