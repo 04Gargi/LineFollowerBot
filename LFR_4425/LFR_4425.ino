@@ -1,4 +1,4 @@
-// #define pri
+#define pri
 #include <LSA08.h>
 
 #include"Variables.h"
