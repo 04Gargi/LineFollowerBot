@@ -5,6 +5,14 @@ void calc() {
   err = setp - lsa_v;
   differr = err - preverr;
   preverr = err;
+#ifdef pri
+  Serial.print(" err:");
+  Serial.print(err);
+  Serial.print("\t");
+  Serial.print(" diferr:");
+  Serial.print(differr);
+  Serial.print("\t");
+#endif
 }
 void pid_calc() {
   pwm1 = arr[0][0] + arr[0][1] * err - arr[0][3] * differr;
@@ -16,12 +24,6 @@ void pid_calc() {
   Serial.print("\t");
   Serial.print(" p2:");
   Serial.print(pwm2);
-  Serial.print("\t");
-  Serial.print(" err:");
-  Serial.print(err);
-  Serial.print("\t");
-  Serial.print(" diferr:");
-  Serial.print(differr);
   Serial.println("\t");
 #endif
 }
