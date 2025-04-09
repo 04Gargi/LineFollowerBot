@@ -3,12 +3,15 @@
 
 void stop();
 void moveForward();
+void Forward();
+void moveLeft();
+void moveRight();
 
 void s_req() {
   L.AttachAnalogPin(A1);
   // L.debugger.Initialize("LSA", &Serial);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(enA, OUTPUT);
   pinMode(enB, OUTPUT);
   pinMode(in1, OUTPUT);
@@ -30,16 +33,25 @@ void l_req() {
   lsa_v = L.ReadLSA();
   if (lsa_v == 255) {
     stop();
-  } else {
-    if (digitalRead(junctionPulse)) {
-      if (++cnt > 4) {
-        stop();
-      }
-      else moveForward();
-    } else {
-      moveForward();
-    }
+   } 
+  else {
+  //   // if (digitalRead(junctionPulse)) {
+  //   //   if (++cnt > 4) {
+  //   //     stop();
+  //   //   }
+  //   //   else moveForward();
+  //   // } else {
+  //     moveForward();
+  //   // }
+  // }
+  // else{
+    if(lsa_v>=55) moveRight();
+    else if(lsa_v<=25) moveLeft();
+    else Forward();
   }
+
+
+
 
 
 #ifdef pri
