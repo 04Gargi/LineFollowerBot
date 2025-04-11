@@ -1,3 +1,4 @@
+#include "Arduino.h"
 #ifndef sl_h
 #define sl_h
 
@@ -6,9 +7,14 @@ void moveForward();
 void Forward();
 void moveLeft();
 void moveRight();
+void slowdown();
+void calibration();
+void moveBackward();
 
 void s_req() {
   L.AttachAnalogPin(A1);
+  pinMode(A2, INPUT);
+  calibration();
   // L.debugger.Initialize("LSA", &Serial);
 
   Serial.begin(115200);
@@ -27,39 +33,49 @@ void s_req() {
   pinMode(junctionPulse, INPUT);
 
   delay(2000);
+  timer = millis();
 }
 
 void l_req() {
   lsa_v = L.ReadLSA();
+  // ir = analogRead(A2);
+  // if (ir > t) thresh = true;
+  // else thresh = false;
+  // !thresh &&
+
+  timer = millis();
   if (lsa_v == 255) {
-    stop();
-   } 
-  else {
-  //   // if (digitalRead(junctionPulse)) {
-  //   //   if (++cnt > 4) {
-  //   //     stop();
-  //   //   }
-  //   //   else moveForward();
-  //   // } else {
-  //     moveForward();
-  //   // }
-  // }
-  // else{
-    if(lsa_v>=55) moveRight();
-    else if(lsa_v<=25) moveLeft();
-    else Forward();
+    // stop();
+    moveBackward();
+  } 
+  else if (digitalRead(junctionPulse)) {
+    if (lsa_v >= 45)
+      moveRight();
+    else if (lsa_v >= 30 && lsa_v <45) {
+      Forward();
+    } else if (lsa_v < 30) {
+      moveLeft();
+    }
+    // else moveBackward();
   }
-
-
-
-
-
+   else {
+    moveForward();
+  }
+  timer = millis();
 #ifdef pri
   Serial.print("lsa: ");
   Serial.print(lsa_v);
   Serial.print("\t");
   Serial.print("cnt: ");
   Serial.print(cnt);
+  Serial.print("\t");
+  Serial.print("thresh: ");
+  Serial.print(thresh);
+  Serial.print("\t");
+  Serial.print("jncn: ");
+  Serial.print(digitalRead(junctionPulse));
+  Serial.print("\t");
 #endif
 }
+
 #endif
