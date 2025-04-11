@@ -7,7 +7,7 @@ void wait() {
 }
 void moveForward() {
   calc();
-  pid_calc();
+  pid1_calc();
   pwm1 = constrain(pwm1, 0, 220);
   pwm2 = constrain(pwm2, 0, 220);
   digitalWrite(in1, 1);
@@ -18,7 +18,7 @@ void moveForward() {
   analogWrite(enB, pwm2);
 
 #ifdef pri
-  Serial.print("Forward");
+  Serial.print("moveForward");
   Serial.print("\t");
 #endif
 }
@@ -27,17 +27,16 @@ void stop() {
   analogWrite(enB, 0);
 }
 void moveRight() {
-  // For robot to move left, right motor has to be faster than left motor
   calc();
-  pid_calc();
-  pwm1 = constrain(abs(pwm1), 0, 220);
-  pwm2 = constrain(abs(pwm2), 0, 220);
+  pid1_calc();
+  pwm1 = constrain((pwm1), 0, 220);
+  pwm2 = constrain((pwm2), 0, 220);
   digitalWrite(in1, 0);
   digitalWrite(in2, 1);
   digitalWrite(in3, 0);
   digitalWrite(in4, 1);
-  analogWrite(enA, pwm1);
-  analogWrite(enB, pwm2);
+  analogWrite(enA, 80);
+  analogWrite(enB, 80);
 #ifdef pri
   Serial.print("Rightt");
   Serial.print("\t");
@@ -45,17 +44,16 @@ void moveRight() {
 }
 
 void moveLeft() {
-  // For robot to move right, left motor has to be faster than right motor
   calc();
-  pid_calc();
-  pwm1 = constrain(abs(pwm1), 0, 220);
-  pwm2 = constrain(abs(pwm2), 0, 220);
+  pid1_calc();
+  pwm1 = constrain((pwm1), 0, 220);
+  pwm2 = constrain((pwm2), 0, 220);
   digitalWrite(in1, 1);
   digitalWrite(in2, 0);
   digitalWrite(in3, 1);
   digitalWrite(in4, 0);
-  analogWrite(enA, pwm1);
-  analogWrite(enB, pwm2);
+  analogWrite(enA, 80);
+  analogWrite(enB, 80);
 #ifdef pri
   Serial.print("Left");
   Serial.print("\t");
@@ -71,12 +69,35 @@ void Forward() {
   digitalWrite(in2, 0);
   digitalWrite(in3, 0);
   digitalWrite(in4, 1);
-  analogWrite(enA, 70);
-  analogWrite(enB, 70);
+  analogWrite(enA, 80);
+  analogWrite(enB, 80);
 
 #ifdef pri
   Serial.print("Forward");
   Serial.print("\t");
 #endif
 }
+void moveBackward() {
+  // For robot to move forward, both motors have to be same speed
+  calc();
+  pid1_calc();
+  pwm1 = constrain(pwm1, 0, 220);
+  pwm2 = constrain(pwm2, 0, 220);
+  digitalWrite(in1, 0);
+  digitalWrite(in2, 1);
+  digitalWrite(in3, 1);
+  digitalWrite(in4, 0);
+  analogWrite(enA, pwm1);
+  analogWrite(enB, pwm2);
+  // Serial.println("Backward");
+}
+// void slowdown() {
+    
+//   // if(pwm1<)
+//   while (millis() - timer < 200) {
+//     pwm1 += (-2);
+//     pwm2 += (-2);
+//     // delay(20);
+//   }
+// }
 #endif
