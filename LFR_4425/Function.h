@@ -10,8 +10,8 @@ void moveForward() {
   pid1_calc();
   pwm1 = constrain(pwm1, 0, 220);
   pwm2 = constrain(pwm2, 0, 220);
-  digitalWrite(in1, 1);
-  digitalWrite(in2, 0);
+  digitalWrite(in1, 0);
+  digitalWrite(in2, 1);
   digitalWrite(in3, 0);
   digitalWrite(in4, 1);
   analogWrite(enA, pwm1);
@@ -25,16 +25,20 @@ void moveForward() {
 void stop() {
   analogWrite(enA, 0);
   analogWrite(enB, 0);
+  #ifdef pri
+  Serial.print("stop");
+  Serial.print("\t");
+#endif
 }
 void moveRight() {
   calc();
   pid1_calc();
   pwm1 = constrain((pwm1), 0, 220);
   pwm2 = constrain((pwm2), 0, 220);
-  digitalWrite(in1, 0);
-  digitalWrite(in2, 1);
-  digitalWrite(in3, 0);
-  digitalWrite(in4, 1);
+  digitalWrite(in1, 1);
+  digitalWrite(in2, 0);
+  digitalWrite(in3, 1);
+  digitalWrite(in4, 0);
   analogWrite(enA, 80);
   analogWrite(enB, 80);
 #ifdef pri
@@ -48,8 +52,8 @@ void moveLeft() {
   pid1_calc();
   pwm1 = constrain((pwm1), 0, 220);
   pwm2 = constrain((pwm2), 0, 220);
-  digitalWrite(in1, 1);
-  digitalWrite(in2, 0);
+  digitalWrite(in1, 0);
+  digitalWrite(in2, 1);
   digitalWrite(in3, 1);
   digitalWrite(in4, 0);
   analogWrite(enA, 80);
@@ -65,8 +69,8 @@ void Forward() {
   pid_calc();
   pwm1 = constrain(pwm1, 0, 220);
   pwm2 = constrain(pwm2, 0, 220);
-  digitalWrite(in1, 1);
-  digitalWrite(in2, 0);
+  digitalWrite(in1, 0);
+  digitalWrite(in2, 1);
   digitalWrite(in3, 0);
   digitalWrite(in4, 1);
   analogWrite(enA, 80);
@@ -80,19 +84,22 @@ void Forward() {
 void moveBackward() {
   // For robot to move forward, both motors have to be same speed
   calc();
-  pid1_calc();
+  pid_calc();
   pwm1 = constrain(pwm1, 0, 220);
   pwm2 = constrain(pwm2, 0, 220);
-  digitalWrite(in1, 0);
-  digitalWrite(in2, 1);
+  digitalWrite(in1, 1);
+  digitalWrite(in2, 0);
   digitalWrite(in3, 1);
   digitalWrite(in4, 0);
-  analogWrite(enA, pwm1);
-  analogWrite(enB, pwm2);
-  // Serial.println("Backward");
+  analogWrite(enA, 120);
+  analogWrite(enB, 120);
+#ifdef pri
+  Serial.print("Backward");
+  Serial.print("\t");
+#endif
 }
 // void slowdown() {
-    
+
 //   // if(pwm1<)
 //   while (millis() - timer < 200) {
 //     pwm1 += (-2);

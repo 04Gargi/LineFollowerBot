@@ -10,6 +10,9 @@ void moveRight();
 void slowdown();
 void calibration();
 void moveBackward();
+void calc();
+void pid1_calc();
+void pid_calc();
 
 void s_req() {
   L.AttachAnalogPin(A1);
@@ -31,46 +34,50 @@ void s_req() {
   digitalWrite(in4, LOW);
 
   pinMode(junctionPulse, INPUT);
-
-  delay(2000);
   timer = millis();
+  delay(2000);
 }
 
 void l_req() {
   lsa_v = L.ReadLSA();
-  // ir = analogRead(A2);
-  // if (ir > t) thresh = true;
-  // else thresh = false;
-  // !thresh &&
 
-  timer = millis();
+  calc();
+  pid1_calc();
+
   if (lsa_v == 255) {
-    // stop();
-    moveBackward();
-  } 
-  else if (digitalRead(junctionPulse)) {
-    if (lsa_v >= 45)
-      moveRight();
-    else if (lsa_v >= 30 && lsa_v <45) {
-      Forward();
-    } else if (lsa_v < 30) {
-      moveLeft();
+    if (millis() - timer > 1000) {
+      stop();
     }
-    // else moveBackward();
-  }
-   else {
+    // moveBackward();
+
+  } else if (digitalRead(junctionPulse)) {
+    if (pwm1 < 0) {
+      digitalWrite(in1, 1);
+      digitalWrite(in2, 0);
+      digitalWrite(in3, 0);
+      digitalWrite(in4, 1);
+      analogWrite(enA, 80);
+      analogWrite(enB, 80);
+    } else if (pwm2 < 0) {
+      digitalWrite(in1, 0);
+      digitalWrite(in2, 1);
+      digitalWrite(in3, 1);
+      digitalWrite(in4, 0);
+      analogWrite(enA, 80);
+      analogWrite(enB, 80);
+    } else Forward();
+
+    timer = millis();
+  } else {
     moveForward();
   }
-  timer = millis();
 #ifdef pri
   Serial.print("lsa: ");
   Serial.print(lsa_v);
   Serial.print("\t");
   Serial.print("cnt: ");
   Serial.print(cnt);
-  Serial.print("\t");
-  Serial.print("thresh: ");
-  Serial.print(thresh);
+
   Serial.print("\t");
   Serial.print("jncn: ");
   Serial.print(digitalRead(junctionPulse));

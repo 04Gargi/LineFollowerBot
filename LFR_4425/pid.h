@@ -24,12 +24,12 @@ void pid_calc() {
   Serial.print("\t");
   Serial.print(" p2:");
   Serial.print(pwm2);
-  Serial.println("\t");
+  Serial.print("\t");
 #endif
 }
 void pid1_calc() {
-  pwm1 = arr1[0][0] + arr1[0][1] * err - arr1[0][3] * differr;
-  pwm2 = arr1[1][0] - arr1[1][1] * err + arr1[1][3] * differr;
+  pwm2 = arr1[0][0] + arr1[0][1] * err - arr1[0][3] * differr;
+  pwm1 = arr1[1][0] - arr1[1][1] * err + arr1[1][3] * differr;
 
 #ifdef pri
   Serial.print(" p1:");
