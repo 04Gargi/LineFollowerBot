@@ -37,19 +37,23 @@ float err = 0, preverr = 0, differr = 0;
 //   { 110, 6.75, 0, 2.2},//6.75
 //   { 136,9.7, 0, 1.5}//9
 // };
-float arr1[2][4] = {
-   { 90, 6, 0, 0.7 },
-   { 103, 5.5, 0, 0.7 }   
-};
-float arr[2][4] = {
-{ 69, 0.9, 0, 0 },
-  { 79, 0.9, 0, 0.4 }
- };
-
-// float arr[2][4] = {
-//   { 69, 0.9, 0, 0 },
-//   { 79, 0.9, 0, 0.4 }
+// float arr1[2][4] = {
+//   { 90, 6, 0, 0.7 },
+//   { 103, 5.5, 0, 0.7 }
 // };
+float arr1[2][4] = {
+  { 95, 7.0, 0, 2.0 },
+  { 110, 6.5, 0, 2.0 }
+};
+// float arr[2][4] = {
+//   { 90, 6, 0, 0.7 },
+//   { 103, 5.5, 0, 0.7 }
+// };
+
+float arr[2][4] = {
+  { 80, 0.48, 0, 0 },
+  { 68, 0.4, 0, 0 }
+};
 
 float pid1 = 0, pid2 = 0;
 
@@ -57,13 +61,28 @@ LSA08 L;  //LSA object
 
 int setp = 40;
 
-int cnt = 0;  // count of junctions
+int cnt1 = 0;  // count of junctions
+int cnt2 = 0;
 
 bool st = false;  // flag for movement
 
 long timer = 0;
-int t = 0;  //threshold
-bool thresh = false;
-int val[30], max = 0, min = 0;
+long timer1 = 0;
+long zztimer = 0;
+
+int l = 11;
+int r = 12;
+int rm = 13;
+int lm = 10;
+int dv[4];
+int jp[4];
+
+bool zz = false;  // flag for zigzag motion
+bool zz2 = false;
+bool dc = false;
+
+// bool jncn = false;
+
+long t1 = 0, t2 = 0;
 
 #endif
