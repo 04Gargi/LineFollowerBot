@@ -2,6 +2,7 @@
 #ifndef sl_h
 #define sl_h
 
+// Function Declarations
 void stop();
 void moveForward();
 // void Forward();
@@ -19,6 +20,7 @@ void decelerate();
 void jn_digital();
 void nojndecision();
 
+// Setup function
 void s_req() {
   L.AttachAnalogPin(A1);
   // pinMode(A2, INPUT);
@@ -48,33 +50,31 @@ void s_req() {
   delay(2000);
 }
 
+// Main loop logic
 void l_req() {
-  lsa_v = L.ReadLSA();  //get analog
-  digital();            //get digital
+  lsa_v = L.ReadLSA();  // get analog sensor value
+  digital();            // read digital line sensors
 
-  calc();       //calculate helper for pid
-  pid1_calc();  // pid calc
+  calc();       // PID helper calculations
+  pid1_calc();  // main PID logic
 
-  if (lsa_v == 255) {  //no line condn
+  if (lsa_v == 255) {  // no line condition
     if (millis() - timer > 1000) {
       stop();
       return;
     }
-
-
   } else if (digitalRead(junctionPulse)) {
     jn_digital();
     decision();
-    // moveRight();
-
     timer = millis();
   } else {
-    nojndecision();
+    nojndecision();  // for straight or turns not at junctions
     moveForward();
     zz = false;
     timer1 = millis();
     timer = millis();
   }
+
 #ifdef pri
   Serial.print("lsa: ");
   Serial.print(lsa_v);
