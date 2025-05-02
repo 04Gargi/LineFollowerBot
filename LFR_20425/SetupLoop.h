@@ -4,7 +4,7 @@
 
 void stop();
 void moveForward();
-void Forward();
+// void Forward();
 void moveLeft();
 void moveRight();
 void slowdown();
@@ -13,11 +13,16 @@ void moveBackward();
 void calc();
 void pid1_calc();
 void pid_calc();
+void digital();
+void decision();
+void decelerate();
+void jn_digital();
+void nojndecision();
 
 void s_req() {
   L.AttachAnalogPin(A1);
-  pinMode(A2, INPUT);
-  calibration();
+  // pinMode(A2, INPUT);
+  // calibration();
   // L.debugger.Initialize("LSA", &Serial);
 
   Serial.begin(115200);
@@ -27,6 +32,11 @@ void s_req() {
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
+
+  pinMode(lm, INPUT);
+  pinMode(rm, INPUT);
+  pinMode(l, INPUT);
+  pinMode(r, INPUT);
 
   digitalWrite(in1, LOW);
   digitalWrite(in2, LOW);
@@ -39,45 +49,35 @@ void s_req() {
 }
 
 void l_req() {
-  lsa_v = L.ReadLSA();
+  lsa_v = L.ReadLSA();  //get analog
+  digital();            //get digital
 
-  calc();
-  pid1_calc();
+  calc();       //calculate helper for pid
+  pid1_calc();  // pid calc
 
-  if (lsa_v == 255) {
+  if (lsa_v == 255) {  //no line condn
     if (millis() - timer > 1000) {
       stop();
+      return;
     }
-    // moveBackward();
+
 
   } else if (digitalRead(junctionPulse)) {
-    if (pwm1 < 0) {
-      digitalWrite(in1, 1);
-      digitalWrite(in2, 0);
-      digitalWrite(in3, 0);
-      digitalWrite(in4, 1);
-      analogWrite(enA, 80);
-      analogWrite(enB, 80);
-    } else if (pwm2 < 0) {
-      digitalWrite(in1, 0);
-      digitalWrite(in2, 1);
-      digitalWrite(in3, 1);
-      digitalWrite(in4, 0);
-      analogWrite(enA, 80);
-      analogWrite(enB, 80);
-    } else Forward();
+    jn_digital();
+    decision();
+    // moveRight();
 
     timer = millis();
   } else {
+    nojndecision();
     moveForward();
+    zz = false;
+    timer1 = millis();
+    timer = millis();
   }
 #ifdef pri
   Serial.print("lsa: ");
   Serial.print(lsa_v);
-  Serial.print("\t");
-  Serial.print("cnt: ");
-  Serial.print(cnt);
-
   Serial.print("\t");
   Serial.print("jncn: ");
   Serial.print(digitalRead(junctionPulse));

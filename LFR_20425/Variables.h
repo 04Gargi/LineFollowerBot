@@ -25,45 +25,51 @@ int pwm1 = 0;
 *The given variables are for pid.
 */
 float err = 0, preverr = 0, differr = 0;
-// float arr[2][4] = {
-//   { 105, 1.2, 0, 0.6 },
-//   { 120, 1.2, 0, 0.8}
-// };
-// float arr[2][4] = {
-//   { 78, 1.3, 0, 0.3},
-//   { 128, 1.5, 0, 0.2}
-// };
-// float arr1[2][4] = {
-//   { 110, 6.75, 0, 2.2},//6.75
-//   { 136,9.7, 0, 1.5}//9
-// };
-float arr1[2][4] = {
-   { 90, 6, 0, 0.7 },
-   { 103, 5.5, 0, 0.7 }   
-};
-float arr[2][4] = {
-{ 69, 0.9, 0, 0 },
-  { 79, 0.9, 0, 0.4 }
- };
 
-// float arr[2][4] = {
-//   { 69, 0.9, 0, 0 },
-//   { 79, 0.9, 0, 0.4 }
+// float arr1[2][4] = {
+//   { 90, 6, 0, 0.7 },
+//   { 103, 5.5, 0, 0.7 }
 // };
+
+// for forward
+float arr1[2][4] = {
+  { 90, 6, 0, 0.7 },
+  { 103, 5.5, 0, 0.7 }
+};
+
+// for turns
+float arr[2][4] = {
+  { 70, 4, 0, 1 },
+  { 85, 3.6, 0, 0.8 }
+};
 
 float pid1 = 0, pid2 = 0;
 
 LSA08 L;  //LSA object
 
-int setp = 40;
-
-int cnt = 0;  // count of junctions
+int setp = 40;  //setpoint for pid
 
 bool st = false;  // flag for movement
 
 long timer = 0;
-int t = 0;  //threshold
-bool thresh = false;
-int val[30], max = 0, min = 0;
+long timer1 = 0;
+long zztimer = 0;
+
+/* The below are the pins for Digital part of LSA */
+int l = 11;
+int r = 12;
+int rm = 13;
+int lm = 10;
+
+int dv[4];  // array to store digital value
+int jp[4];  //array to store junction digital value
+
+bool zz = false;  // flag for zigzag motion
+bool zz2 = false;
+bool dc = false;
+
+// bool jncn = false;
+
+long t1 = 0, t2 = 0;
 
 #endif
