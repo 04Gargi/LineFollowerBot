@@ -6,24 +6,17 @@ void decision() {
   // jn_digital();
 
   if ((jp[0] == 1 && jp[1] == 1 && jp[3] == 1) && !zz && (millis() - zztimer > 300)) {
+
     while (dv[1] != 1 || dv[2] != 1) {
-      moveRight();
+      // moveRight();
       digital();
     }
     return;
   }
-
-  if (err > -11) {
-    zz = true;
-    moveLeft(); 
-  } else if (err < 9) {
-    zz = true;
-    moveRight();  
-  }
-
-  if ((jp[0] == 1) && jp[3] == 0) {
+  
+  if (jp[0] == 1 && jp[3] == 0 || err < -15) {
     long t1 = millis();
-    while (dv[1] != 1 && millis() - t1 < 300) {
+    while (dv[1] != 1 && millis() - t1 < 200) {
       digital();
       moveLeft();
     }
@@ -32,18 +25,14 @@ void decision() {
 
   if ((jp[3] == 1) && jp[0] == 0) {
     long t1 = millis();
-    while (dv[2] != 1 && millis() - t1 < 300) {
+    while (dv[2] != 1 && millis() - t1 < 200) {
       digital();
       moveRight();
-    }
 
-    jp[0] = 0;
-    jp[1] = 0;
-    jp[2] = 0;
-    jp[3] = 0;
+      // if()
+    }
     return;
   }
-
   dv[0] = 0;
   dv[1] = 0;
   dv[2] = 0;
@@ -53,14 +42,14 @@ void decision() {
   jp[1] = 0;
   jp[2] = 0;
   jp[3] = 0;
-
+  moveForward();
+  // zz = false;
   return;
 }
 
-void nojndecision() {
-  if (dv[0] == 1 && dv[3] == 1) {
+void nojndecision(){
+  if(dv[0] == 1 && dv[3] == 1 || dv[0] == 1 && dv[1] == 1 || dv[2] == 1 && dv[3] == 1){
     moveForward();
   }
 }
-
 #endif

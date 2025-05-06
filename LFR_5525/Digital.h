@@ -30,12 +30,21 @@ void digital() {
 }
 
 void jn_digital() {
-  if (digitalRead(junctionPulse)) {
-    jp[0] = digitalRead(lm);
-    jp[1] = digitalRead(l);
-    jp[2] = digitalRead(r);
-    jp[3] = digitalRead(rm);
-  }
+  // if (digitalRead(junctionPulse)) {
+  jp[0] = digitalRead(lm);
+  jp[1] = digitalRead(l);
+  jp[2] = digitalRead(r);
+  jp[3] = digitalRead(rm);
+  Serial.print("jp[0]: ");
+  Serial.print(jp[0]);
+  Serial.print(" jp[1]: ");
+  Serial.print(jp[1]);
+  Serial.print(" jp[2]: ");
+  Serial.print(jp[2]);
+  Serial.print(" jp[3]: ");
+  Serial.print(jp[3]);
+  Serial.print("\t");
+  // }
 }
 
 #endif
