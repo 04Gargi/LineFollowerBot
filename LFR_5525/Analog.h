@@ -3,10 +3,6 @@
 
 void analog(){
   lsa_v = L.ReadLSA();
-  // ir = analogRead(A2);
-  // if (ir > t) thresh = true;
-  // else thresh = false;
-  // !thresh &&
 
   timer = millis();
   if (lsa_v == 255) {
